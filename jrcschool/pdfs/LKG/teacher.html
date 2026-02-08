@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Portal | JRC स्कूल</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+  <header class="bg-teal-800 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="bg-teal-500 font-extrabold rounded-full h-10 w-10 flex items-center justify-center text-lg">T</div>
+          <div>
+            <h1 class="text-xl font-bold">JRC Teacher Portal</h1>
+            <p class="text-xs text-teal-200">छात्र रजिस्ट्रेशन, परिणाम व फीस</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-teal-200" id="teacherName"></span>
+          <button id="refreshBtn" class="bg-teal-600 hover:bg-teal-500 px-4 py-2 rounded-lg text-sm font-medium">🔄 Refresh</button>
+          <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-medium">🚪 Logout</button>
+          <a href="school.html" class="bg-teal-500 hover:bg-teal-400 px-4 py-2 rounded-lg text-sm font-medium">🏠 Home</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <!-- 1. Student Registration (Teacher admits student) -->
+    <section class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-teal-800 mb-4">📝 Student Registration (छात्र रजिस्टर करें)</h2>
+      <p class="text-sm text-gray-600 mb-4">जिस छात्र को आप रजिस्टर करेंगे, वही बाद में स्टूडेंट पोर्टल से खाता बना सकता है। नाम case-sensitive रखें।</p>
+      <form id="registerStudentForm" class="flex flex-wrap gap-4 items-end">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">छात्र का नाम (जैसे लिखें वैसा ही)</label>
+          <input type="text" id="regName" required class="border rounded-lg px-3 py-2 w-48 focus:ring-2 focus:ring-teal-500" placeholder="नाम">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">कक्षा</label>
+          <select id="regClass" required class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500">
+            <option value="">चुनें</option>
+            <option value="Nursery">Nursery</option>
+            <option value="LKG">LKG</option>
+            <option value="UKG">UKG</option>
+            <option value="1">कक्षा 1</option>
+            <option value="2">कक्षा 2</option>
+            <option value="3">कक्षा 3</option>
+            <option value="4">कक्षा 4</option>
+            <option value="5">कक्षा 5</option>
+            <option value="6">कक्षा 6</option>
+            <option value="7">कक्षा 7</option>
+            <option value="8">कक्षा 8</option>
+            <option value="9">कक्षा 9</option>
+            <option value="9-Arts">कक्षा 9 (Arts)</option>
+            <option value="9-Home Science">कक्षा 9 (Home Science)</option>
+            <option value="9-Science">कक्षा 9 (Science)</option>
+            <option value="10">कक्षा 10</option>
+            <option value="11-Arts">कक्षा 11 (Arts)</option>
+            <option value="11-Commerce">कक्षा 11 (Commerce)</option>
+            <option value="11-Science">कक्षा 11 (Science)</option>
+            <option value="12-Arts">कक्षा 12 (Arts)</option>
+            <option value="12-Commerce">कक्षा 12 (Commerce)</option>
+            <option value="12-Science">कक्षा 12 (Science)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">रोल नंबर</label>
+          <input type="text" id="regRollNo" required class="border rounded-lg px-3 py-2 w-28 focus:ring-2 focus:ring-teal-500" placeholder="रोल">
+        </div>
+        <button type="submit" class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700">रजिस्टर करें</button>
+      </form>
+      <p id="regMessage" class="mt-2 text-sm hidden"></p>
+    </section>
+
+    <!-- 2. Class filter & Students list -->
+    <section class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-teal-800 mb-4">👥 छात्र सूची (कक्षा के अनुसार)</h2>
+      <div class="flex flex-wrap gap-4 items-center mb-4">
+        <label class="font-medium text-gray-700">कक्षा फ़िल्टर:</label>
+        <select id="classFilter" class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500">
+          <option value="">सभी कक्षाएं</option>
+          <option value="Nursery">Nursery</option>
+          <option value="LKG">LKG</option>
+          <option value="UKG">UKG</option>
+          <option value="1">कक्षा 1</option>
+          <option value="2">कक्षा 2</option>
+          <option value="3">कक्षा 3</option>
+          <option value="4">कक्षा 4</option>
+          <option value="5">कक्षा 5</option>
+          <option value="6">कक्षा 6</option>
+          <option value="7">कक्षा 7</option>
+          <option value="8">कक्षा 8</option>
+          <option value="9">कक्षा 9</option>
+          <option value="9-Arts">कक्षा 9 (Arts)</option>
+          <option value="9-Home Science">कक्षा 9 (Home Science)</option>
+          <option value="9-Science">कक्षा 9 (Science)</option>
+          <option value="10">कक्षा 10</option>
+          <option value="11-Arts">कक्षा 11 (Arts)</option>
+          <option value="11-Commerce">कक्षा 11 (Commerce)</option>
+          <option value="11-Science">कक्षा 11 (Science)</option>
+          <option value="12-Arts">कक्षा 12 (Arts)</option>
+          <option value="12-Commerce">कक्षा 12 (Commerce)</option>
+          <option value="12-Science">कक्षा 12 (Science)</option>
+        </select>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">नाम</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">कक्षा</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">रोल नंबर</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">खाता</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">क्रिया</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody" class="bg-white divide-y divide-gray-200">
+            <tr><td colspan="5" class="px-4 py-8 text-center text-gray-500">कक्षा चुनें या सभी देखें</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. Selected student: Result & Fees -->
+    <section id="selectedStudentSection" class="hidden bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-teal-800 mb-2" id="selectedStudentTitle">छात्र: --</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Add Result -->
+        <div>
+          <h3 class="text-lg font-semibold text-teal-700 mb-3">परीक्षा परिणाम जोड़ें (अंक डालने पर % व ग्रेड अपने आप)</h3>
+          <form id="addResultForm" class="space-y-3">
+            <input type="hidden" id="resultStudentId">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">परीक्षा का नाम</label>
+              <input type="text" id="resultExamName" required class="w-full border rounded-lg px-3 py-2" placeholder="अर्धवार्षिक 2024">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">सत्र</label>
+              <input type="text" id="resultSession" class="w-full border rounded-lg px-3 py-2" placeholder="2024-25">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">कुल अंक</label>
+                <input type="number" id="resultTotalMarks" class="w-full border rounded-lg px-3 py-2" placeholder="100" min="0">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">प्राप्त अंक</label>
+                <input type="number" id="resultObtainedMarks" class="w-full border rounded-lg px-3 py-2" placeholder="85" min="0">
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-sm">
+              <div class="bg-gray-100 rounded px-2 py-2"><span class="text-gray-600">प्रतिशत:</span> <strong id="autoPercentage">--</strong></div>
+              <div class="bg-gray-100 rounded px-2 py-2"><span class="text-gray-600">ग्रेड:</span> <strong id="autoGrade">--</strong></div>
+              <div class="bg-gray-100 rounded px-2 py-2"><span class="text-gray-600">पास/फेल:</span> <strong id="autoPassFail">--</strong></div>
+            </div>
+            <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded-lg font-medium hover:bg-teal-700">परिणाम जोड़ें</button>
+          </form>
+          <div class="mt-4">
+            <h4 class="font-medium text-gray-700 mb-2">इस छात्र के परिणाम</h4>
+            <div id="studentResultsList" class="space-y-2 text-sm"></div>
+          </div>
+        </div>
+        <!-- Add Fee -->
+        <div>
+          <h3 class="text-lg font-semibold text-teal-700 mb-3">फीस रिकॉर्ड जोड़ें / अपडेट</h3>
+          <form id="addFeeForm" class="space-y-3">
+            <input type="hidden" id="feeStudentId">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">विवरण</label>
+              <input type="text" id="feeDescription" class="w-full border rounded-lg px-3 py-2" placeholder="वार्षिक फीस 2024-25">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">कुल (₹)</label>
+                <input type="number" id="feeAmount" required class="w-full border rounded-lg px-3 py-2" min="0" placeholder="15000">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">दी गई (₹)</label>
+                <input type="number" id="feePaid" class="w-full border rounded-lg px-3 py-2" min="0" value="0" placeholder="0">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">सत्र</label>
+              <input type="text" id="feeSession" class="w-full border rounded-lg px-3 py-2" placeholder="2024-25">
+            </div>
+            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700">फीस जोड़ें</button>
+          </form>
+          <div class="mt-4">
+            <h4 class="font-medium text-gray-700 mb-2">इस छात्र की फीस</h4>
+            <div id="studentFeesList" class="space-y-2 text-sm"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/teacher-auth.js"></script>
+  <script src="js/teacher.js"></script>
+  <script>
+    if (TeacherAuth.isAuthenticated()) {
+      const s = TeacherAuth.getSession();
+      if (s) document.getElementById('teacherName').textContent = 'Welcome, ' + (s.username || 'Teacher');
+    }
+  </script>
+</body>
+</html>

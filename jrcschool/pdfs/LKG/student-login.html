@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>छात्र लॉगिन | JRC स्कूल</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+  <header class="bg-blue-900 text-white">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center space-x-3">
+        <div class="bg-yellow-400 text-blue-900 font-extrabold rounded-full h-10 w-10 flex items-center justify-center text-lg">J</div>
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-widest">J.R.C. Inter College</p>
+          <p class="text-xs text-gray-200">Harahi Bazar, Basti (U.P.)</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="school.html" class="hover:text-yellow-300">होम</a>
+        <a href="student-login.html" class="text-yellow-300 font-semibold">छात्र लॉगिन</a>
+        <a href="teacher-login.html" class="text-gray-300 hover:text-yellow-300 border border-gray-600 px-3 py-1 rounded-full">👩‍🏫 Teacher</a>
+        <a href="admin-login.html" class="text-gray-300 hover:text-yellow-300 border border-gray-600 px-3 py-1 rounded-full">🔐 Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-md mx-auto px-4 py-12 w-full">
+    <h1 class="text-3xl font-bold text-center text-blue-800 mb-2">छात्र पोर्टल</h1>
+    <p class="text-center text-gray-600 mb-8">अपना खाता बनाएं या लॉगिन करें</p>
+
+    <div class="flex rounded-t-xl overflow-hidden border border-b-0 border-gray-200 bg-white">
+      <button type="button" id="tabRegister" class="flex-1 py-3 text-sm font-medium bg-blue-600 text-white">नया खाता बनाएं</button>
+      <button type="button" id="tabLogin" class="flex-1 py-3 text-sm font-medium bg-gray-100 text-gray-700">लॉगिन</button>
+    </div>
+
+    <div id="formRegister" class="bg-white border border-t-0 border-gray-200 rounded-b-xl shadow-lg p-6 space-y-4">
+      <h2 class="text-xl font-semibold text-blue-700 mb-4">खाता बनाएं</h2>
+      <p class="text-xs text-gray-600 mb-2">खाता सिर्फ उन छात्रों का बन सकता है जिन्हें स्कूल में शिक्षक द्वारा पहले रजिस्टर किया गया हो। नाम वही लिखें जैसा स्कूल में दर्ज है (case-sensitive)।</p>
+      <form id="registerForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">छात्र का नाम</label>
+          <input type="text" id="regName" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="पूरा नाम">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">कक्षा</label>
+          <select id="regClass" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">कक्षा चुनें</option>
+            <option value="Nursery">Nursery</option>
+            <option value="LKG">LKG</option>
+            <option value="UKG">UKG</option>
+            <option value="1">कक्षा 1</option>
+            <option value="2">कक्षा 2</option>
+            <option value="3">कक्षा 3</option>
+            <option value="4">कक्षा 4</option>
+            <option value="5">कक्षा 5</option>
+            <option value="6">कक्षा 6</option>
+            <option value="7">कक्षा 7</option>
+            <option value="8">कक्षा 8</option>
+            <option value="9">कक्षा 9</option>
+            <option value="9-Arts">कक्षा 9 (Arts)</option>
+            <option value="9-Home Science">कक्षा 9 (Home Science)</option>
+            <option value="9-Science">कक्षा 9 (Science)</option>
+            <option value="10">कक्षा 10</option>
+            <option value="11-Arts">कक्षा 11 (Arts)</option>
+            <option value="11-Commerce">कक्षा 11 (Commerce)</option>
+            <option value="11-Science">कक्षा 11 (Science)</option>
+            <option value="12-Arts">कक्षा 12 (Arts)</option>
+            <option value="12-Commerce">कक्षा 12 (Commerce)</option>
+            <option value="12-Science">कक्षा 12 (Science)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">रोल नंबर</label>
+          <input type="text" id="regRollNo" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="रोल नंबर">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">पासवर्ड (कम से कम 6 अक्षर)</label>
+          <input type="password" id="regPassword" required minlength="6" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="पासवर्ड">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">पासवर्ड दोबारा लिखें</label>
+          <input type="password" id="regConfirmPassword" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="पासवर्ड दोबारा">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">खाता बनाएं</button>
+      </form>
+    </div>
+
+    <div id="formLogin" class="bg-white border border-t-0 border-gray-200 rounded-b-xl shadow-lg p-6 space-y-4 hidden">
+      <h2 class="text-xl font-semibold text-blue-700 mb-4">लॉगिन करें</h2>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">कक्षा</label>
+          <select id="loginClass" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">कक्षा चुनें</option>
+            <option value="Nursery">Nursery</option>
+            <option value="LKG">LKG</option>
+            <option value="UKG">UKG</option>
+            <option value="1">कक्षा 1</option>
+            <option value="2">कक्षा 2</option>
+            <option value="3">कक्षा 3</option>
+            <option value="4">कक्षा 4</option>
+            <option value="5">कक्षा 5</option>
+            <option value="6">कक्षा 6</option>
+            <option value="7">कक्षा 7</option>
+            <option value="8">कक्षा 8</option>
+            <option value="9">कक्षा 9</option>
+            <option value="9-Arts">कक्षा 9 (Arts)</option>
+            <option value="9-Home Science">कक्षा 9 (Home Science)</option>
+            <option value="9-Science">कक्षा 9 (Science)</option>
+            <option value="10">कक्षा 10</option>
+            <option value="11-Arts">कक्षा 11 (Arts)</option>
+            <option value="11-Commerce">कक्षा 11 (Commerce)</option>
+            <option value="11-Science">कक्षा 11 (Science)</option>
+            <option value="12-Arts">कक्षा 12 (Arts)</option>
+            <option value="12-Commerce">कक्षा 12 (Commerce)</option>
+            <option value="12-Science">कक्षा 12 (Science)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">रोल नंबर</label>
+          <input type="text" id="loginRollNo" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="रोल नंबर">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">पासवर्ड</label>
+          <input type="password" id="loginPassword" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="पासवर्ड">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">लॉगिन</button>
+      </form>
+    </div>
+
+    <p id="formMessage" class="mt-4 text-center text-sm hidden"></p>
+  </main>
+
+  <footer class="bg-gray-900 text-center text-white py-4 text-sm">
+    <p>© 2025 JRC स्कूल, हरही बाज़ार बस्ती</p>
+  </footer>
+
+  <script src="js/student-panel.js"></script>
+  <script>
+    (function() {
+      var tabRegister = document.getElementById('tabRegister');
+      var tabLogin = document.getElementById('tabLogin');
+      var formRegister = document.getElementById('formRegister');
+      var formLogin = document.getElementById('formLogin');
+      function showRegister() {
+        tabRegister.classList.add('bg-blue-600', 'text-white');
+        tabRegister.classList.remove('bg-gray-100');
+        tabLogin.classList.remove('bg-blue-600', 'text-white');
+        tabLogin.classList.add('bg-gray-100', 'text-gray-700');
+        formRegister.classList.remove('hidden');
+        formLogin.classList.add('hidden');
+      }
+      function showLogin() {
+        tabLogin.classList.add('bg-blue-600', 'text-white');
+        tabLogin.classList.remove('bg-gray-100', 'text-gray-700');
+        tabRegister.classList.remove('bg-blue-600', 'text-white');
+        tabRegister.classList.add('bg-gray-100', 'text-gray-700');
+        formLogin.classList.remove('hidden');
+        formRegister.classList.add('hidden');
+      }
+      tabRegister.addEventListener('click', showRegister);
+      tabLogin.addEventListener('click', showLogin);
+    })();
+  </script>
+</body>
+</html>
